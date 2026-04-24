@@ -39,7 +39,7 @@ request.interceptors.response.use(
     res => res.data,
     err => {
         const msg = err.response?.data?.detail || "网络错误，稍后重试"
-        Elmessage.error(msg)
+        ElMessage.error(msg)
         return Promise.reject(err)
     }
 )

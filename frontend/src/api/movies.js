@@ -21,7 +21,7 @@ export const getTopMovies = (limit = 10) => request.get('/movies/top', { params:
 export const getGenres = () => request.get('/movies/genres')
 
 // 点赞
-export const likeMovie = (id) => request.get(`/interaction/${id}/like`)
+export const likeMovie = (id) => request.post(`/interaction/${id}/like`)
 
 // 收藏
-export const collectMovie = (id) => request.get(`/interaction/${id}/collect`)
+export const collectMovie = (id) => request.post(`/interaction/${id}/collect`)

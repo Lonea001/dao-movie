@@ -55,7 +55,7 @@ def movie_to_dict(movie: Movie, db: Session = None) -> dict:
 @router.get("")
 def get_movies(
         page        : int           = Query(1,  ge=1,           description="页码, 从1开始"),
-        page_size   : int           = Query(20, ge=1, le=100,   description="每页数量"),
+        page_size   : int           = Query(24, ge=1, le=100,   description="每页数量"),
         q           : Optional[str] = Query(None,               description="搜索关键词 （片名 / 导演 / 演员）"),
         genre       : Optional[str] = Query(None,               description="类型筛选，如：科幻"),
         year        : Optional[str] = Query(None,               description="年份筛选，如：2016"),
@@ -101,7 +101,7 @@ def get_movies(
         "page"      : page,
         "page_size" : page_size,
         "pages"     : (total + page_size - 1) // page_size,      # 向上取整公式，为余数多创造一页。-1 影响多进位
-        "items"     : [movie_to_dict(m) for m in items]
+        "items"     : [movie_to_dict(m, db) for m in items]
     }
     return query_data
 

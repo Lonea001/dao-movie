@@ -5,7 +5,7 @@ from database import engine
 from models import Base
 
 # 导入 api 路由
-from routers import movies, rankings, interaction, admin
+from routers import movies, rankings, interaction, admin, posters
 
 # 启动时自动建表，存在则跳过
 Base.metadata.create_all(bind=engine)
@@ -30,6 +30,8 @@ app.include_router(movies.router,           prefix="/api/movies",       tags=["�
 app.include_router(rankings.router,         prefix="/api/rankings",     tags=["榜单"])
 app.include_router(interaction.router,      prefix="/api/interaction",  tags=["点赞/收藏"])
 app.include_router(admin.router,            prefix="/api/admin",        tags=["管理员"])
+app.include_router(posters.router,          prefix="/api/posters",      tags=['封面'])
+
 
 @app.get("/")
 def root():
