@@ -59,7 +59,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, watch } from 'vue'
+import { ref, reactive, onMounted,onUnmounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import MovieCard from '@/components/MovieCard.vue'
 import { getMovies, getGenres } from '@/api/movies'
@@ -101,7 +101,27 @@ onMounted(async () => {
   const res = await getGenres()
   genres.value = res.genres || []
   fetchMovies()
+
+  // 左右方向键翻页
+  window.addEventListener('keydown', handleKeyNav)
 })
+
+onUnmounted(() =>{
+  window.removeEventListener('keydown', handleKeyNav)
+})
+
+const handleKeyNav = (e) => {
+  if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return
+
+  if (e.key == 'ArrowLeft' && params.page > 1){
+    params.page--
+    fetchMovies()
+  }
+  if(e.key == 'ArrowRight' && params.page < Math.ceil(total.value / params.page_size)){
+    params.page++
+    fetchMovies()
+  }
+}
 
 // 监听路由参数变化（从首页搜索跳过来）
 watch(() => route.query.q, (q) => {

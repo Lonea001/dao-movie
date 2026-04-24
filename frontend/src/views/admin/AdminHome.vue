@@ -40,6 +40,8 @@
       :title="isEdit ? '编辑榜单' : '新建榜单'"
       width="660px"
       destroy-on-close
+      :close-on-press-escape="false"
+      
     >
       <el-form :model="form" label-width="80px">
         <el-form-item label="榜单名">
